@@ -77,6 +77,18 @@ function populateFilters() {
   platformSelect.value = filters.platform;
 }
 
+// Compare Python versions (e.g., "3.10" > "3.9")
+function comparePyVersion(a, b) {
+  const partsA = a.split('.').map(Number);
+  const partsB = b.split('.').map(Number);
+  for (let i = 0; i < Math.max(partsA.length, partsB.length); i++) {
+    const numA = partsA[i] || 0;
+    const numB = partsB[i] || 0;
+    if (numA !== numB) return numA - numB;
+  }
+  return 0;
+}
+
 // Check if Python version matches (handles "3.8+" style versions)
 function pythonMatches(wheelPy, filterPy) {
   if (filterPy === 'all') return true;
@@ -84,10 +96,17 @@ function pythonMatches(wheelPy, filterPy) {
 
   // Handle "3.8+" style - matches any version >= 3.8
   if (wheelPy.endsWith('+')) {
-    const minVersion = parseFloat(wheelPy.replace('+', ''));
-    const filterVersion = parseFloat(filterPy);
-    return !isNaN(filterVersion) && filterVersion >= minVersion;
+    const minVersion = wheelPy.replace('+', '');
+    // filterPy >= minVersion
+    return comparePyVersion(filterPy, minVersion) >= 0;
   }
+
+  // Handle filter being "3.8+" style - wheel should be >= 3.8
+  if (filterPy.endsWith('+')) {
+    const minVersion = filterPy.replace('+', '');
+    return comparePyVersion(wheelPy.replace('+', ''), minVersion) >= 0;
+  }
+
   return false;
 }
 
