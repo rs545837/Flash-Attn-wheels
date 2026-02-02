@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flash Attention Wheels</title>
+  <meta name="description" content="Pre-built wheels for Flash Attention 2 & 3. Skip compilation, install in seconds.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --black: #000;
+      --white: #fff;
+      --gray-100: #f5f5f5;
+      --gray-200: #e5e5e5;
+      --gray-300: #d4d4d4;
+      --gray-400: #a3a3a3;
+      --gray-500: #737373;
+      --gray-600: #525252;
+      --gray-700: #404040;
+      --gray-800: #262626;
+      --gray-900: #171717;
+    }
+
+    ::selection {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    body {
+      font-family: 'IBM Plex Mono', monospace;
+      background: var(--white);
+      color: var(--black);
+      min-height: 100vh;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      padding: 60px 0 40px;
+      border-bottom: 1px solid var(--black);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .tagline {
+      color: var(--gray-600);
+      font-size: 0.9rem;
+      max-width: 500px;
+    }
+
+    /* Version Toggle */
+    .version-toggle {
+      display: flex;
+      gap: 0;
+      margin: 40px 0 32px;
+      border: 1px solid var(--black);
+      width: fit-content;
+    }
+
+    .version-btn {
+      padding: 10px 20px;
+      background: var(--white);
+      border: none;
+      color: var(--gray-500);
+      font-family: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border-right: 1px solid var(--black);
+    }
+
+    .version-btn:last-child {
+      border-right: none;
+    }
+
+    .version-btn:hover {
+      color: var(--black);
+    }
+
+    .version-btn.active {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    /* Search */
+    .search-box {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px 16px 14px 44px;
+      background: var(--white);
+      border: 1px solid var(--black);
+      color: var(--black);
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: box-shadow 0.15s ease;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      box-shadow: 4px 4px 0 var(--black);
+    }
+
+    .search-box input::placeholder {
+      color: var(--gray-400);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-400);
+    }
+
+    /* Filters */
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 700px) {
+      .filters {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .filter-group label {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray-500);
+      margin-bottom: 6px;
+    }
+
+    .filter-group select {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--white);
+      border: 1px solid var(--black);
+      color: var(--black);
+      font-family: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: box-shadow 0.15s ease;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+    }
+
+    .filter-group select:hover,
+    .filter-group select:focus {
+      outline: none;
+      box-shadow: 3px 3px 0 var(--black);
+    }
+
+    /* Results */
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .results-count {
+      color: var(--gray-500);
+      font-size: 0.85rem;
+    }
+
+    .results-count span {
+      color: var(--black);
+      font-weight: 600;
+    }
+
+    .clear-link {
+      color: var(--gray-500);
+      font-size: 0.85rem;
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+    }
+
+    .clear-link:hover {
+      color: var(--black);
+    }
+
+    .wheel-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--black);
+      border: 1px solid var(--black);
+    }
+
+    .wheel-card {
+      background: var(--white);
+      padding: 20px;
+      transition: background 0.15s ease;
+    }
+
+    .wheel-card:hover {
+      background: var(--gray-100);
+    }
+
+    .wheel-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .badge {
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border: 1px solid var(--black);
+    }
+
+    .badge-version {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .command-group {
+      margin-bottom: 12px;
+    }
+
+    .command-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray-500);
+      margin-bottom: 6px;
+    }
+
+    .command-box {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--black);
+    }
+
+    .command-box code {
+      flex: 1;
+      padding: 10px 12px;
+      background: var(--gray-100);
+      font-size: 0.8rem;
+      font-family: inherit;
+      color: var(--black);
+      overflow-x: auto;
+      white-space: nowrap;
+      border-right: 1px solid var(--black);
+    }
+
+    .copy-btn {
+      padding: 10px 14px;
+      background: var(--white);
+      border: none;
+      color: var(--black);
+      cursor: pointer;
+      transition: background 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .copy-btn:hover {
+      background: var(--gray-100);
+    }
+
+    .copy-btn.copied {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .wheel-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .wheel-size {
+      color: var(--gray-500);
+      font-size: 0.8rem;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--white);
+      color: var(--black);
+      border: 1px solid var(--black);
+      font-family: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .download-btn:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      border: 1px solid var(--black);
+    }
+
+    .empty-state p {
+      color: var(--gray-500);
+      margin-bottom: 20px;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 80px;
+      padding: 40px 0;
+      border-top: 1px solid var(--black);
+    }
+
+    .sources {
+      color: var(--gray-500);
+      font-size: 0.8rem;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .source-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .source-links a {
+      color: var(--black);
+      text-decoration: none;
+      font-size: 0.85rem;
+      border-bottom: 1px solid var(--gray-300);
+      transition: border-color 0.15s ease;
+    }
+
+    .source-links a:hover {
+      border-color: var(--black);
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      .wheel-footer {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .download-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Flash Attention Wheels</h1>
+      <p class="tagline">Pre-built wheels for Flash Attention 2 & 3. Skip the 30+ minute compilation.</p>
+    </header>
+
+    <main>
+      <div class="version-toggle">
+        <button class="version-btn active" data-version="all">All</button>
+        <button class="version-btn" data-version="2">v2</button>
+        <button class="version-btn" data-version="3">v3</button>
+      </div>
+
+      <div class="search-box">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input type="text" id="search" placeholder="Search...">
+      </div>
+
+      <div class="filters">
+        <div class="filter-group">
+          <label>CUDA</label>
+          <select id="cuda-filter">
+            <option value="all">All</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Python</label>
+          <select id="python-filter">
+            <option value="all">All</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>PyTorch</label>
+          <select id="pytorch-filter">
+            <option value="all">All</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Platform</label>
+          <select id="platform-filter">
+            <option value="all">All</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="results-header">
+        <div class="results-count"><span id="count">0</span> wheels</div>
+        <button class="clear-link" onclick="clearFilters()">Clear filters</button>
+      </div>
+
+      <div class="wheel-list" id="wheel-list"></div>
+    </main>
+
+    <footer>
+      <p class="sources">Sources</p>
+      <div class="source-links">
+        <a href="https://flashattn.dev/" target="_blank">flashattn.dev</a>
+        <a href="https://windreamer.github.io/flash-attention3-wheels/" target="_blank">Flash Attn 3 Wheels</a>
+        <a href="https://github.com/mjun0812/flash-attention-prebuild-wheels" target="_blank">mjun0812/prebuild-wheels</a>
+        <a href="https://github.com/Dao-AILab/flash-attention" target="_blank">Dao-AILab/flash-attention</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="wheels.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
