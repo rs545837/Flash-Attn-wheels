@@ -350,6 +350,36 @@
       margin-bottom: 20px;
     }
 
+    /* Quick Install */
+    .quick-install {
+      margin: 40px 0;
+      padding: 24px;
+      border: 1px solid var(--black);
+      background: var(--gray-100);
+    }
+
+    .quick-install-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray-500);
+      margin-bottom: 12px;
+    }
+
+    .quick-install-desc {
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      margin-bottom: 16px;
+    }
+
+    .quick-install .command-box {
+      margin-bottom: 12px;
+    }
+
+    .quick-install .command-box:last-child {
+      margin-bottom: 0;
+    }
+
     /* Footer */
     footer {
       margin-top: 80px;
@@ -404,6 +434,29 @@
       <h1>ML Wheels</h1>
       <p class="tagline">Pre-built wheels for Flash Attention & vLLM. Skip the compilation.</p>
     </header>
+
+    <div class="quick-install">
+      <div class="quick-install-title">Auto-Install</div>
+      <p class="quick-install-desc">Detect your environment and install the right wheel automatically:</p>
+      <div class="command-box">
+        <code>pip install mlwheels && mlwheels flash-attn</code>
+        <button class="copy-btn" onclick="copyCmd(this, 'pip install mlwheels && mlwheels flash-attn')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="command-box">
+        <code>pip install mlwheels && mlwheels vllm</code>
+        <button class="copy-btn" onclick="copyCmd(this, 'pip install mlwheels && mlwheels vllm')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
 
     <main>
       <div class="version-toggle" id="library-toggle">

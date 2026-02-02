@@ -2,6 +2,23 @@
 
 Pre-built wheels for Flash Attention & vLLM. Skip the compilation.
 
+## Quick Install
+
+Auto-detect your environment and install the right wheel:
+
+```bash
+pip install mlwheels
+
+# Install Flash Attention
+mlwheels flash-attn
+
+# Install vLLM
+mlwheels vllm
+
+# Just detect environment (no install)
+mlwheels --detect
+```
+
 ## Features
 
 - Search and filter by CUDA, Python, PyTorch, and Platform
